@@ -58,9 +58,11 @@ class Robot:
                                   headers={'Authorization': f'Token {self.token}'}).json()
             for queue in queues:
                 Queues.append(Queue(self.robotId, self.url, self.token, queueId=queue['QueueId']))
+            return Queues
         except:
             warnings.warn('Method findQueuesByName fail -> Robot Data Not set')
-        return Queues
+            return []
+
 
     def finishExecution(self):
         try:
