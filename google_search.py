@@ -2,13 +2,21 @@ import time
 from selenium.webdriver.common.keys import Keys
 import pandas as pd
 import sqlite3
+
+from iBott import ChromeBrowser
 from iRobot import robot, settings
 
 
 class Keywords:
     def __init__(self, robotInstance=None):
         self.robot = robotInstance
-        self.browser = robotInstance.browser
+        #self.browser = robotInstance.browser
+
+        self.browser = ChromeBrowser(undetectable=True)
+        self.browser.load_extension(settings.EXTENION_PATH)
+        self.browser.open()
+        self.browser.maximize_window()
+
         self.search_data = []
         self.pages_data = []
 
@@ -41,7 +49,7 @@ class Keywords:
             arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
             arrows[0].click()
             time.sleep(1)
-            self.robot.Log.info("Getting data Table")
+            #self.robot.Log.info("Getting data Table")
             dataTable = self.getDataTable()
             for element in dataTable:
                 self.robot.Log.debug(element)
@@ -73,13 +81,13 @@ class Keywords:
 
     def getDataTable(self):
         data = []
-        keyword = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx hKziVK']/a").text
-        self.robot.Log.debug(keyword)
-        similarity = self.browser.find_element_by_xpath(
-            "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']").text
-        volume = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx fTWMJh']").text
-        for k, s, v in zip(keyword, similarity, volume):
-            data.append({"keyword": k, "similarity": s, "volume": v})
+        keywords = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx hKziVK']/a")
+        #self.robot.Log.debug(keyword)
+        similarity = self.browser.find_elements_by_xpath(
+            "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']")
+        volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']")
+        for i in range(len(keywords)):
+            data.append({"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
         return data
 
     def get_page_data(self):
@@ -97,3 +105,13 @@ class Keywords:
                                         "keyword_number": int(keyword_number.replace(",", ""))})
             except:
                 pass
+
+class Qitem:
+    def __init__(self, value):
+        self.value = value
+
+keyword = Keywords()
+
+keyword.get_search_data(Qitem({'Keyword' : 'Jardin vertical'}))
+
+
