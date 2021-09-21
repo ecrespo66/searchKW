@@ -49,7 +49,7 @@ class Keywords:
             arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
             arrows[0].click()
             time.sleep(1)
-            #self.robot.Log.info("Getting data Table")
+            self.robot.Log.info("Getting data Table")
             dataTable = self.getDataTable()
             for element in dataTable:
                 self.robot.Log.debug(element)
@@ -58,7 +58,6 @@ class Keywords:
                     self.robot.Log.debug(k['keyword'])
                     if k['keyword'] != element['keyword']:
                         self.robot.queue.createItem(element['keyword'])
-                        self.robot.queue
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -82,11 +81,12 @@ class Keywords:
     def getDataTable(self):
         data = []
         keywords = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx hKziVK']/a")
-        #self.robot.Log.debug(keyword)
+
         similarity = self.browser.find_elements_by_xpath(
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']")
         volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']")
         for i in range(len(keywords)):
+            self.robot.Log.debug(keywords[i].text)
             data.append({"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
         return data
 
@@ -105,7 +105,7 @@ class Keywords:
                                         "keyword_number": int(keyword_number.replace(",", ""))})
             except:
                 pass
-
+'''
 class Qitem:
     def __init__(self, value):
         self.value = value
@@ -113,5 +113,5 @@ class Qitem:
 keyword = Keywords()
 
 keyword.get_search_data(Qitem({'Keyword' : 'Jardin vertical'}))
-
+'''
 
