@@ -46,13 +46,11 @@ class Keywords:
             for element in dataTable:
                 self.robot.Log.debug(element)
                 self.search_data.append(element)
-
                 for k in self.search_data:
                     self.robot.Log.debug(k['keyword'])
                     if k['keyword'] != element['keyword']:
                         self.robot.queue.createItem(element['keyword'])
                         self.robot.queue
-
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -75,10 +73,11 @@ class Keywords:
 
     def getDataTable(self):
         data = []
-        keyword = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx hKziVK']/a").text
-        similarity = self.browser.find_elements_by_xpath(
+        keyword = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx hKziVK']/a").text
+        self.robot.Log.debug(keyword)
+        similarity = self.browser.find_element_by_xpath(
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']").text
-        volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']").text
+        volume = self.browser.find_element_by_xpath("//span[@class='sc-bdnylx fTWMJh']").text
         for k, s, v in zip(keyword, similarity, volume):
             data.append({"keyword": k, "similarity": s, "volume": v})
         return data

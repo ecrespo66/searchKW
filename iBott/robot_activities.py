@@ -33,7 +33,7 @@ class Robot:
             self.token = response.json()['token']
         except:
             warnings.warn('Robot Data Not set')
-        self.queue = None
+            self.queue = None
 
     def createQueue(self, queueName):
         try:
