@@ -31,7 +31,7 @@ class Main(Robot):
         self.keywords =[]
         self.keyword = Keywords(self)
         try:
-            if len(self.findQueuesByName("Keyword_data")) is 0:
+            if len(self.findQueuesByName("KW_data")) == 0:
                 self.queue = self.createQueue("KW_data")
             else:
                 self.queue = self.findQueuesByName("KW_data")[0]
