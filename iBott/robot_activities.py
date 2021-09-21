@@ -38,9 +38,11 @@ class Robot:
     def createQueue(self, queueName):
         try:
             queue = Queue(self.robotId, self.url, self.token, queueName=queueName)
+            return queue
         except:
             warnings.warn('Method createQueue fail -> Robot Data Not set')
-        return queue
+            return None
+
 
     def findQueueById(self, queueId):
         try:

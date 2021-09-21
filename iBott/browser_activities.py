@@ -1,7 +1,7 @@
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import robot.settings as settings
+import iRobot.settings as settings
 import time
 from selenium.webdriver.common.keys import Keys
 import sys
@@ -39,20 +39,30 @@ class ChromeBrowser(Chrome):
         Set Custom options before using this method.
         '''
         if self.undetectable:
+
             undetectable_install(self.driver, target_version=get_chrome_version())
             from selenium.webdriver import Chrome
             from selenium.webdriver.chrome.options import Options
+            self.options.add_argument("--disable-blink-features=AutomationControlled")
             self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
             self.options.add_experimental_option('useAutomationExtension', False)
         else:
             pass
         super().__init__(self.driver, options=self.options)
 
+    def load_extension(self, extension_path):
+        self.options.add_extension(extension_path)
+
     def ignoreImages(self):
         """Disable images in browser for a better performane"""
 
         prefs = {"profile.managed_default_content_settings.images": 2}
         self.options.add_experimental_option("prefs", prefs)
+
+    def disableNotifications(self):
+        prefs = {"profile.default_content_setting_values.notifications": 2}
+        self.options.add_experimental_option("prefs", prefs)
+
 
     def headless(self):
         """Hide Browser"""
@@ -102,7 +112,6 @@ class ChromeBrowser(Chrome):
             self.execute_script(f'window.scrollTo(0,{str(i)})')
             time.sleep(0.1)
 
-
     def enter(self, element):
         element.send_keys(Keys.ENTER)
 
@@ -128,6 +137,16 @@ class ChromeBrowser(Chrome):
             return True
         else:
             return False
+
+    def waitFor(self, method, selector, seconds=60):
+        timeout = 0
+        while not self.element_exists(method, selector):
+            time.sleep(1)
+            timeout += 1
+            if timeout == seconds:
+                break
+
+
 
 
 def get_chromedriver_filename():

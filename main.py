@@ -1,6 +1,6 @@
 import sys
 import traceback
-from robot import robot
+from iRobot import robot
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
