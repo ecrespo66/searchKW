@@ -1,3 +1,9 @@
-list = ["perro","gato"]
+from iBott import ChromeBrowser
+from iRobot import settings
 
-print(list.index("Caballo"))
+browser = ChromeBrowser(undetectable=True)
+browser.load_extension(settings.EXTENION_PATH)
+browser.open()
+browser.maximize_window()
+
+
