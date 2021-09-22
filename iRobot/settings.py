@@ -7,7 +7,7 @@ ROBOT_FOLDER = Path(os.path.dirname(os.path.realpath(__file__))).parent
 CHROMEDRIVER_PATH = os.path.join(ROBOT_FOLDER, "Driver")
 
 FILES_PATH= os.path.join(ROBOT_FOLDER, "data")
-DB_PATH= "/Users/enriquecrespodebenito/Desktop/"
+DB_PATH= "/Users/enriquecrespodebenito/Desktop/db.sqlite3"
 EXTENION_PATH = os.path.join(ROBOT_FOLDER, "Driver/extensions/Keyword-Surfer_v3.1.0.crx")
 
 """Emial General settings"""

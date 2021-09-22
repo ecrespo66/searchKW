@@ -10,13 +10,7 @@ from iRobot import robot, settings
 class Keywords:
     def __init__(self, robotInstance=None):
         self.robot = robotInstance
-        #self.browser = robotInstance.browser
-
-        self.browser = ChromeBrowser(undetectable=True)
-        self.browser.load_extension(settings.EXTENION_PATH)
-        self.browser.open()
-        self.browser.maximize_window()
-
+        self.browser = robotInstance.browser
         self.search_data = []
         self.pages_data = []
 
@@ -54,10 +48,9 @@ class Keywords:
             for element in dataTable:
                 self.robot.Log.debug(element)
                 self.search_data.append(element)
-                for k in self.search_data:
-                    self.robot.Log.debug(k['keyword'])
-                    if k['keyword'] != element['keyword']:
-                        self.robot.queue.createItem({'keyword': element['keyword']})
+                if element['keyword'] not in self.search_data:
+                    self.robot.Log.debug("New Queue Item: " + element['keyword'])
+                    self.robot.queue.createItem({'keyword': element['keyword']})
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -67,13 +60,10 @@ class Keywords:
                     time.sleep(2)
                     dataTable = self.getDataTable()
                     for element in dataTable:
-                        self.robot.Log.debug(element)
                         self.search_data.append(element)
-                        for k in self.search_data:
-                            self.robot.Log.debug(k['keyword'])
-                            if k['keyword'] != element['keyword']:
-                                self.robot.queue.createItem({'keyword': element['keyword']})
-
+                        if element['keyword'] not in self.search_data:
+                            self.robot.Log.debug("New Queue Item: " + element['keyword'])
+                            self.robot.queue.createItem({'keyword': element['keyword']})
             time.sleep(1)
 
     def getDataTable(self):
@@ -103,13 +93,5 @@ class Keywords:
                                         "keyword_number": int(keyword_number.replace(",", ""))})
             except:
                 pass
-'''
-class Qitem:
-    def __init__(self, value):
-        self.value = value
 
-keyword = Keywords()
-
-keyword.get_search_data(Qitem({'Keyword' : 'Jardin vertical'}))
-'''
 
