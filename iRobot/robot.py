@@ -65,8 +65,8 @@ class Main(Robot):
                 self.keyword.get_page_data()
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
-            except:
-                pass
+            except Exception as e:
+                self.Log.systemException(e)
             self.process()
 
 

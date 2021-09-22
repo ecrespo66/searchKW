@@ -18,7 +18,7 @@ class Keywords:
         df_search_data = pd.DataFrame(self.search_data)
         df_pages_data = pd.DataFrame(self.pages_data)
 
-        conn = sqlite3.connect(settings.BD_PATH)
+        conn = sqlite3.connect(settings.DB_PATH)
         df_search_data.to_sql('search_data', conn, if_exists='replace', index=True)
         df_pages_data.to_sql('pages_data', conn, if_exists='replace', index=True)
 
@@ -46,7 +46,6 @@ class Keywords:
             self.robot.Log.info("Getting data Table")
             dataTable = self.getDataTable()
             for element in dataTable:
-                self.robot.Log.debug(element)
                 self.search_data.append(element)
                 if element['keyword'] not in self.search_data:
                     self.robot.Log.debug("New Queue Item: " + element['keyword'])
@@ -74,7 +73,6 @@ class Keywords:
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']")
         volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']")
         for i in range(len(keywords)):
-            self.robot.Log.debug(keywords[i].text)
             data.append({"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
         return data
 
