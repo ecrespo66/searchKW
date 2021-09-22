@@ -31,10 +31,10 @@ class Main(Robot):
         self.keywords =[]
         self.keyword = Keywords(self)
         try:
-            if len(self.findQueuesByName("KW")) == 0:
-                self.queue = self.createQueue("KW")
+            if len(self.findQueuesByName("KW2")) == 0:
+                self.queue = self.createQueue("KW2")
             else:
-                self.queue = self.findQueuesByName("KW")[0]
+                self.queue = self.findQueuesByName("KW2")[0]
         except:
             pass
 
@@ -65,8 +65,8 @@ class Main(Robot):
                 self.keyword.get_page_data()
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
-            except Exception as e:
-                self.Log.systemException(str(e))
+            except:
+                pass
             self.process()
 
 
@@ -87,7 +87,7 @@ class Main(Robot):
                 break
             else:
                 self.keywords.append(data)
-            i +=1
+            i += 1
 
 
 
