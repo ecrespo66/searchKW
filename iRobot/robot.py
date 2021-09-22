@@ -66,7 +66,7 @@ class Main(Robot):
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
             except Exception as e:
-                self.Log.systemException(e)
+                self.Log.systemException(str(e))
             self.process()
 
 
