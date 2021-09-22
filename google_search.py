@@ -57,7 +57,7 @@ class Keywords:
                 for k in self.search_data:
                     self.robot.Log.debug(k['keyword'])
                     if k['keyword'] != element['keyword']:
-                        self.robot.queue.createItem(element['keyword'])
+                        self.robot.queue.createItem({'keyword': element['keyword']})
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -69,12 +69,10 @@ class Keywords:
                     for element in dataTable:
                         self.robot.Log.debug(element)
                         self.search_data.append(element)
-
                         for k in self.search_data:
                             self.robot.Log.debug(k['keyword'])
                             if k['keyword'] != element['keyword']:
-                                self.robot.queue.createItem(element['keyword'])
-                                self.robot.queue
+                                self.robot.queue.createItem({'keyword': element['keyword']})
 
             time.sleep(1)
 
