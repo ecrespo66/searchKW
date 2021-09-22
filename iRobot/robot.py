@@ -1,3 +1,5 @@
+import traceback
+
 from iBott import ChromeBrowser, Excel
 from iBott.robot_activities import Robot, Robotmethod, get_all_Methods
 from google_search import Keywords
@@ -66,7 +68,8 @@ class Main(Robot):
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
             except:
-                pass
+                for line in traceback.format_exc().splitlines():
+                    Robot.Log.systemException(str(line))
             self.process()
 
 
@@ -78,7 +81,6 @@ class Main(Robot):
     def read_input(self):
         '''Privte method reads Excel sent from Orchestrator'''
         file = saveFileFromOrchestrator(self.robotParameters['file-1632235752781'], settings.FILES_PATH)
-        self.Log.info(file)
         excel = Excel(file)
         i=1
         while True:
