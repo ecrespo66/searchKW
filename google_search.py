@@ -49,7 +49,7 @@ class Keywords:
                 self.search_data.append(element)
                 if element['keyword'] not in self.search_data:
                     self.robot.Log.debug("New Queue Item: " + element['keyword'])
-                    self.robot.queue.createItem({'keyword': element['keyword']})
+                    self.robot.queue.createItem({'Keyword': element['keyword']})
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -62,7 +62,7 @@ class Keywords:
                         self.search_data.append(element)
                         if element['keyword'] not in self.search_data:
                             self.robot.Log.debug("New Queue Item: " + element['keyword'])
-                            self.robot.queue.createItem({'keyword': element['keyword']})
+                            self.robot.queue.createItem({'Keyword': element['keyword']})
             time.sleep(1)
 
     def getDataTable(self):

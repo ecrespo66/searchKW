@@ -1,5 +1,3 @@
-import traceback
-
 from iBott import ChromeBrowser, Excel
 from iBott.robot_activities import Robot, Robotmethod, get_all_Methods
 from google_search import Keywords
@@ -33,10 +31,10 @@ class Main(Robot):
         self.keywords =[]
         self.keyword = Keywords(self)
         try:
-            if len(self.findQueuesByName("KW2")) == 0:
-                self.queue = self.createQueue("KW2")
+            if len(self.findQueuesByName("KW3")) == 0:
+                self.queue = self.createQueue("KW3")
             else:
-                self.queue = self.findQueuesByName("KW2")[0]
+                self.queue = self.findQueuesByName("KW3")[0]
         except:
             pass
 
@@ -68,8 +66,7 @@ class Main(Robot):
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
             except:
-                for line in traceback.format_exc().splitlines():
-                    Robot.Log.systemException(str(line))
+                pass
             self.process()
 
 
