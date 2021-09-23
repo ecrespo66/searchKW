@@ -13,7 +13,7 @@ class Keywords:
         self.browser = robotInstance.browser
         self.search_data = []
         self.pages_data = []
-        self.kewords = []
+        self.keywords = []
 
     def store_data(self):
         df_search_data = pd.DataFrame(self.search_data)
