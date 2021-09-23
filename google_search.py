@@ -59,6 +59,7 @@ class Keywords:
                 if element['keyword'] not in self.keywords:
                     self.robot.Log.debug("New Queue Item: " + element['keyword'])
                     self.robot.queue.createItem({'Keyword': element['keyword']})
+                    self.keywords.append(element['keyword'])
             while True:
                 arrows = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx evNsMB']")
                 if len(arrows) < 2:
@@ -72,6 +73,7 @@ class Keywords:
                         if element['keyword'] not in self.keywords:
                             self.robot.Log.debug("New Queue Item: " + element['keyword'])
                             self.robot.queue.createItem({'Keyword': element['keyword']})
+                            self.keywords.append(element['keyword'])
             time.sleep(1)
 
     def getDataTable(self):
@@ -82,7 +84,6 @@ class Keywords:
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']")
         volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']")
         for i in range(len(keywords)):
-            self.keywords.append(keywords[i].text)
             data.append({"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
         return data
 

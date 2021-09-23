@@ -31,10 +31,10 @@ class Main(Robot):
         self.keywords =[]
         self.keyword = Keywords(self)
         try:
-            if len(self.findQueuesByName("KW3")) == 0:
-                self.queue = self.createQueue("KW3")
+            if len(self.findQueuesByName("KW4")) == 0:
+                self.queue = self.createQueue("KW4")
             else:
-                self.queue = self.findQueuesByName("KW3")[0]
+                self.queue = self.findQueuesByName("KW4")[0]
         except:
             pass
 
