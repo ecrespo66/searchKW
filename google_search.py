@@ -13,6 +13,7 @@ class Keywords:
         self.browser = robotInstance.browser
         self.search_data = []
         self.pages_data = []
+        self.kewords = []
 
     def store_data(self):
         df_search_data = pd.DataFrame(self.search_data)
@@ -55,7 +56,7 @@ class Keywords:
             dataTable = self.getDataTable()
             for element in dataTable:
                 self.search_data.append(element)
-                if element['keyword'] not in self.search_data:
+                if element['keyword'] not in self.keywords:
                     self.robot.Log.debug("New Queue Item: " + element['keyword'])
                     self.robot.queue.createItem({'Keyword': element['keyword']})
             while True:
@@ -68,7 +69,7 @@ class Keywords:
                     dataTable = self.getDataTable()
                     for element in dataTable:
                         self.search_data.append(element)
-                        if element['keyword'] not in self.search_data:
+                        if element['keyword'] not in self.keywords:
                             self.robot.Log.debug("New Queue Item: " + element['keyword'])
                             self.robot.queue.createItem({'Keyword': element['keyword']})
             time.sleep(1)
@@ -81,6 +82,7 @@ class Keywords:
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']")
         volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']")
         for i in range(len(keywords)):
+            self.keywords.append(keywords[i].text)
             data.append({"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
         return data
 
