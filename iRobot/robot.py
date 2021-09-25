@@ -25,16 +25,16 @@ class Main(Robot):
     def init(self):
         self.browser = ChromeBrowser(undetectable=True)
         self.browser.load_extension(settings.EXTENION_PATH)
+        self.browser.headless()
         self.browser.open()
         self.browser.maximize_window()
-        #self.keywords = ["agapornis", "ninfas", "loros", "papagayos"]
         self.keywords =[]
         self.keyword = Keywords(self)
         try:
-            if len(self.findQueuesByName("KW4")) == 0:
-                self.queue = self.createQueue("KW4")
+            if len(self.findQueuesByName("KW5")) == 0:
+                self.queue = self.createQueue("KW5")
             else:
-                self.queue = self.findQueuesByName("KW4")[0]
+                self.queue = self.findQueuesByName("KW5")[0]
         except:
             pass
 
@@ -66,7 +66,7 @@ class Main(Robot):
                 self.keyword.store_data()
                 Qitem.setItemAsOk()
             except:
-                pass
+                Qitem.setItemAsFail()
             self.process()
 
 

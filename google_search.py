@@ -24,7 +24,7 @@ class Keywords:
         df_pages_data.to_sql('pages_data', conn, if_exists='replace', index=True)
 
     def get_search_data(self, Qitem):
-        keyword = Qitem.value['Keyword']
+        self.keyword = Qitem.value['Keyword']
         self.browser.get("https://google.com")
         self.browser.waitFor("XPATH", "//button[@id='L2AGLb']", 10)
         try:
@@ -34,7 +34,7 @@ class Keywords:
         self.browser.waitFor("XPATH", "//input[@title='Buscar']")
         input = self.browser.find_element_by_xpath("//input[@title='Buscar']")
         input.click()
-        input.send_keys(keyword)
+        input.send_keys(self.keyword)
         input.send_keys(Keys.ENTER)
         self.browser.waitFor("XPATH", "//span[@class='sc-bdnylx evNsMB']", seconds=20)
         if self.browser.element_exists("XPATH", "//*[text()='No results found']"):
@@ -79,12 +79,11 @@ class Keywords:
     def getDataTable(self):
         data = []
         keywords = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx hKziVK']/a")
-
         similarity = self.browser.find_elements_by_xpath(
             "//td[@class='sc-iCoHVE sc-jrsJCI fzKnCn eoHezd']")
         volume = self.browser.find_elements_by_xpath("//span[@class='sc-bdnylx fTWMJh']")
         for i in range(len(keywords)):
-            data.append({"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
+            data.append({"Source_key": self.keyword ,"keyword": keywords[i].text, "similarity": similarity[i].text, "volume": volume[i].text})
         return data
 
     def get_page_data(self):
@@ -96,7 +95,8 @@ class Keywords:
                 domain_traffic = stats.split("📖")[0].replace("🔎 ", "")
                 text_length = stats.split("📖")[1].split("🔑")[0].replace("📖 ", "")
                 keyword_number = stats.split("📖")[1].split("🔑")[1].replace("🔑 ", "")
-                self.pages_data.append({"site": site,
+                self.pages_data.append({"Source_key": self.keyword,
+                                        "site": site,
                                         "domain_traffic": int(domain_traffic.replace(",", "")),
                                         "text_length": int(text_length.replace(",", "")),
                                         "keyword_number": int(keyword_number.replace(",", ""))})

@@ -63,10 +63,8 @@ class ChromeBrowser(Chrome):
         prefs = {"profile.default_content_setting_values.notifications": 2}
         self.options.add_experimental_option("prefs", prefs)
 
-
     def headless(self):
         """Hide Browser"""
-
         self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
         self.options.add_experimental_option('useAutomationExtension', False)
         self.options.add_argument("--headless")
