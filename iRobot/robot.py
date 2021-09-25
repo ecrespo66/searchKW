@@ -25,7 +25,6 @@ class Main(Robot):
     def init(self):
         self.browser = ChromeBrowser(undetectable=True)
         self.browser.load_extension(settings.EXTENION_PATH)
-        self.browser.headless()
         self.browser.open()
         self.browser.maximize_window()
         self.keywords =[]
